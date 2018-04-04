@@ -12,47 +12,15 @@ const Database = {
     ]
   },
   findOne: function (query) {
-    const {id, name, squad} = query;
-    const findById = this.store.heroes.find(obj => obj.id===id);
-    const findByName = this.store.heroes.find(obj => obj.name===name);
-    const findBySquad = this.store.heroes.find(obj => obj.squad===squad);
-    if (findById === undefined && findByName === undefined && findBySquad === undefined) {
-      return null;
-    }
-    if(findById === undefined) {
-      if (findByName === undefined) {
-        return findBySquad;
-      } else {
-        return findByName;
-      }
-    } else {
-      if(findByName === undefined){
-        if(findBySquad === undefined) {
-          return findById;
-        } else {
-          if (findBySquad.squad === findById.squad) {
-            return findById;
-          } else {
-            return null;
-          }
-        }
-      } else {
-        if(findBySquad === undefined){
-          if(findByName.name === findById.name) {
-            return findByName;
-          } else {
-            return null;
-          }
-        } else {
-          if (findById === findByName === findBySquad) {
-            return findByName;
-          } else {
-            return null;
-          }
+    return this.store.heroes.find( obj => {
+      for (let q in query){
+        if (obj[q]!==query[q]) {
+          return false;
         }
       }
-    }
+      return true;
+    }) || null;
   }
 };
 
-console.log(Database.findOne({ id: 2 }));
+console.log(Database.findOne({ id: 2, name: 'Aquaman' }));
