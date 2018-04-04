@@ -9,7 +9,7 @@ const HEROES = [
   { id: 7, name: 'Hulk', squad: 'Avengers' },
 ];
 
-function findOne( array, query ) {
+const findOne = ( array, query ) => {
   const {id, name, squad} = query;
   const findById = array.find(obj => obj.id===id);
   const findByName = array.find(obj => obj.name===name);
@@ -18,20 +18,15 @@ function findOne( array, query ) {
   if (findById === undefined && findByName === undefined && findBySquad === undefined) {
     return null;
   }
-
-  if(findById === undefined) {
+  if (findById === undefined) {
     if (findByName === undefined) {
       return findBySquad;
     } else {
-      if (findByName === findBySquad) {
-        return findBySquad;
-      } else {
-        return null;
-      }
+      return findByName;
     }
   } else {
-    if(findByName === undefined){
-      if(findBySquad === undefined) {
+    if (findByName === undefined) {
+      if (findBySquad === undefined) {
         return findById;
       } else {
         if (findBySquad.squad === findById.squad) {
@@ -41,7 +36,7 @@ function findOne( array, query ) {
         }
       }
     } else {
-      if(findBySquad === undefined){
+      if (findBySquad === undefined){
         if(findByName.name === findById.name) {
           return findByName;
         } else {
@@ -55,8 +50,8 @@ function findOne( array, query ) {
         }
       }
     }
-  }
-}
+  } 
+};
 
 
 
